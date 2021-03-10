@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleEmailChange = ({ target: { value } }) => {
+    setEmail(value);
+  };
+  const handlePasswordChange = ({ target: { value } }) => {
+    setPassword(value);
+  };
+
+  const handleFormSubmit = (event) => {
+    console.log("submit");
+    event.preventDefault();
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handleFormSubmit}>
+        <h2>Iniciar Sesión</h2>
+        <label>
+          Correo
+          <input type="email" alue={email} onChange={handleEmailChange}></input>
+        </label>
+        <label>
+          Contraseña
+          <input
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+          ></input>
+        </label>
+        <button type="submit">Entrar</button>
+      </form>
     </div>
   );
 }
