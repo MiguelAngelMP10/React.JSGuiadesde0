@@ -1,56 +1,39 @@
-import { useState, Component } from "react";
+import { useState, useEffect } from "react";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "",
-    };
-    console.log("Contructor");
-  }
-  componentDidMount() {
-    console.log("componentDidMount");
-  }
-  componentDidUpdate(prevProps, prevState) {
-    //console.log(prevProps, prevState);
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    // console.log(nextProps, nextState);
-    return true;
-  }
+const App = () => {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState(0);
 
-  getSnapshotBeforeUpdate(prevProps, prevState) {
-    console.log(prevProps, prevState);
-  }
+  // componentDidUpdate
+  useEffect(() => {
+    console.log("div update effect");
+  });
 
-  render() {
-    return (
-      <div>
-        <input
-          value={this.state.name}
-          onChange={({ target: { value } }) => this.setState({ name: value })}
-        ></input>
-      </div>
-    );
-  }
-}
+  // componentDidMount
+  useEffect(() => {
+    console.log("Did Mount effect");
+  }, []);
 
-// function App() {
-//   const [name, setName] = useState("Miguel");
-//   const [age] = useState();
-//   //const [, setSomething] = useState("Hey1");
+  useEffect(() => {
+    console.log("name cambio");
+  }, [name]);
 
-//   const handleHeyClick = () => {
-//     setName("Angel");
-//   };
-
-//   return (
-//     <div className="App">
-//       <h2> Hola {name}</h2>
-//       <p>{age}</p>
-//       <button onClick={handleHeyClick}>Hey</button>
-//     </div>
-//   );
-// }
+  useEffect(() => {
+    console.log("age cambio");
+  }, [age]);
+  return (
+    <div>
+      <input
+        value={name}
+        onChange={({ target: { value } }) => setName(value)}
+      ></input>
+      <br></br>
+      <input
+        value={age}
+        onChange={({ target: { value } }) => setAge(value)}
+      ></input>
+    </div>
+  );
+};
 
 export default App;
