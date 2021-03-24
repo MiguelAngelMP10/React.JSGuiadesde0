@@ -2,6 +2,7 @@ import SearchBox from "./components/SearchBox";
 import { useState } from "react";
 import data from "../../data/users.json";
 import "./style.css";
+import SearchResults from "./components/SearchResults/indes";
 
 export default function Search() {
   const [isAtTop, setIsAtTop] = useState(false);
@@ -25,13 +26,13 @@ export default function Search() {
     }
   };
 
-  console.log(results);
   return (
     <div className={`search ${isAtTop ? "search--top" : "search--center"} `}>
       <SearchBox
         onSearch={handleSearchClick}
         onClose={handleCloseSearch}
       ></SearchBox>
+      <SearchResults results={results}></SearchResults>
     </div>
   );
 }
