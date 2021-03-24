@@ -2,7 +2,7 @@ import SearchBox from "./components/SearchBox";
 import { useState } from "react";
 import data from "../../data/users.json";
 import "./style.css";
-import SearchResults from "./components/SearchResults/indes";
+import SearchResults from "./components/SearchResults";
 
 export default function Search() {
   const [isAtTop, setIsAtTop] = useState(false);
