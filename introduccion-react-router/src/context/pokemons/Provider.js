@@ -3,6 +3,9 @@ import apiCall from "../../api";
 import { useState } from "react";
 export default function PokemonProvider({ children }) {
   const [pokemons, setPokemons] = useState();
+
+  const [pokemonDetail, setPokemonDetail] = useState({});
+
   const getPokemons = async () => {
     try {
       let params = {
@@ -15,8 +18,25 @@ export default function PokemonProvider({ children }) {
       console.log(error);
     }
   };
+
+  const getPokemonDetail = async (id) => {
+    if (!id) Promise.reject("id es requerido");
+    try {
+      let params = {
+        url: `https://pokeapi.co/api/v2/item/${id}`,
+      };
+      const pokemonsDetail = await apiCall(params);
+      setPokemonDetail(pokemonsDetail);
+    } catch (error) {
+      setPokemonDetail({});
+      console.log(error);
+    }
+  };
+
   return (
-    <PokemonContext.Provider value={{ getPokemons, pokemons }}>
+    <PokemonContext.Provider
+      value={{ getPokemons, pokemons, getPokemonDetail, pokemonDetail }}
+    >
       {children}
     </PokemonContext.Provider>
   );
