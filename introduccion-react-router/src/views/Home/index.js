@@ -1,20 +1,33 @@
 import { useContext, useEffect } from "react";
+import Loading from "../../componets/Loading";
 
 import PokemonContext from "../../context/pokemons";
 import PokemonList from "./components/PokemonList";
+import ErrorMessage from "../../componets/ErrorMessage";
+
 export default function Home() {
-  const { getPokemons, pokemons, isLoading } = useContext(PokemonContext);
+  const {
+    getPokemons,
+    pokemons,
+    isLoading,
+    hasError,
+    errorMessage,
+  } = useContext(PokemonContext);
   useEffect(() => {
     getPokemons().catch(null);
   }, []);
 
   if (isLoading) {
-    return <p>Cargando resultados....</p>;
+    return <Loading title="Cargando resultados...."></Loading>;
   }
 
   return (
-    <div>
-      <PokemonList pokemons={pokemons}></PokemonList>
-    </div>
+    <>
+      {hasError ? (
+        <ErrorMessage message={errorMessage} />
+      ) : (
+        <PokemonList pokemons={pokemons} />
+      )}
+    </>
   );
 }

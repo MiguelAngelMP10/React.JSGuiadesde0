@@ -5,9 +5,16 @@ export default function PokemonProvider({ children }) {
   const [pokemons, setPokemons] = useState();
   const [pokemonDetail, setPokemonDetail] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const getPokemons = async () => {
     try {
       setIsLoading(true);
+
+      setErrorMessage("");
+      setHasError(false);
+
       let params = {
         url: "https://pokeapi.co/api/v2/pokemon?limit=100&offset=200",
       };
@@ -15,7 +22,8 @@ export default function PokemonProvider({ children }) {
       setPokemons(pokemonsResults.results);
     } catch (error) {
       setPokemons([]);
-      console.log(error);
+      setErrorMessage("Algo ha pasado, verifica tu conexion");
+      setHasError(true);
     } finally {
       setIsLoading(false);
     }
@@ -25,6 +33,10 @@ export default function PokemonProvider({ children }) {
     if (!id) Promise.reject("id es requerido");
     try {
       setIsLoading(true);
+
+      setErrorMessage("");
+      setHasError(false);
+
       let params = {
         url: `https://pokeapi.co/api/v2/pokemon/${id}`,
       };
@@ -32,7 +44,8 @@ export default function PokemonProvider({ children }) {
       setPokemonDetail(pokemonsDetail);
     } catch (error) {
       setPokemonDetail({});
-      console.log(error);
+      setErrorMessage("Algo ha pasado, verifica tu conexion");
+      setHasError(true);
     } finally {
       setIsLoading(false);
     }
